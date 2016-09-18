@@ -1,4 +1,4 @@
-# liri-node-app
+# Liri-node-app
 Liri is a Language Interpretation and Recognition Interface. Liri will be a command line Node.js app that takes in parameters and gives you back data.
 
 ## API's used
@@ -19,6 +19,7 @@ Searches the Spotify API and returns the following to console:
 * Song Name
 * Preview Link
 * Album
+
 If no song name is used with the above command, it will return the above values for "The Sign" by Ace of Base
 
 ### node liri.js movie-this <movie name>
@@ -32,6 +33,7 @@ Pass in a movie name, use OMDB API to show the following:
 * Actors in the movie.
 * Rotten Tomatoes Rating.
 * Rotten Tomatoes URL.
+
 Default output for null user input is "Mr. Nobody" and console log 'It's on Netflix.'
 
 ### node liri.js do-what-it-says
