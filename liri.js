@@ -35,7 +35,7 @@ function myTweets () {
 	var params = keys.params;
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 		if (!error) {
-    		console.log(tweets);
+    		console.log(response);
   		} else {
   			console.log(response);
   		}
@@ -47,16 +47,31 @@ function myTweets () {
 function spotify() {
 	var spotify = require('spotify');
  
-	spotify.search({ type: 'track', query: process.argv[3] }, function(err, data) {
-    if (err) {
-        console.log('Error occurred: ' + err);
-        return;
-    }
-    // Do something with 'data' 
-    else {
-    	console.log(data);
-    }
-	});
+	spotify.search({ type: 'track', query: process.argv[3] }, function(error, response) {
+	    if (error) {
+	        console.log('Error occurred: ' + error);
+	        return;
+	    }
+	    // Do something with 'data' 
+	    else {
+	    	// store response array
+	    	var responseArr = response.tracks.items;
+
+	    	// console log a message from Liri:
+	    	console.log(process.argv[3] + '. Ok, Got it! Here are the results for "spotify-this-song-' + process.argv[3] + '"');
+	    	// console.log(responseArr[0]);
+	    	for (var i = 0; i < responseArr.length; i++) {
+	    		console.log('Result #: ' + i);
+	    		console.log('Artist: ' + responseArr[i].artists[0].name);
+	    		console.log('Song Name: ' + responseArr[i].name);
+	    		console.log('Preview Link: ' + responseArr[i].preview_url);
+	    		console.log('Album: ' + responseArr[i].album.name);
+	    		console.log('=========================================');
+	    	}
+	    }
+
+	    
+	})
 }
 
 // function to run on 'movie-this' command
