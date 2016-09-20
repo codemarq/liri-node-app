@@ -1,5 +1,5 @@
 //  grab data from keys.js and store in a variable
-var keys =  require('./keys.js');
+var keys = require('./keys.js');
 
 // require fs node package
 var fs = require('fs');
@@ -24,6 +24,21 @@ command == 'movie-this' ? movie() :
 command == 'do-what-it-says' ? says() :
 console.log('Check your spelling and try again!');
 
+// started to repeat this code, so made a function
+function writeTweets (array) {
+	for (var i = 0; i < array.length; i++) {
+		// console log
+		console.log('=========================================');
+		// write last tweets in decending order to terminal
+		console.log('# ' + (array.length -(i)) + ': ' + array[i].text);
+
+		// append to log.txt
+		appendLog('=========================================');
+		// write last tweets in decending order to log.txt
+		appendLog('# ' + (array.length -(i)) + ': ' + array[i].text);
+	}
+}
+
 // function to run on "my-tweets" command.
 // this should show in Terminal the last 20 tweets and created time
 function myTweets () {
@@ -38,20 +53,6 @@ function myTweets () {
 		// variable to store response as a JS Object
 		var twitterArr = JSON.parse(response.body); 
 
-		// started to repeat this code, so made a function
-		function writeTweets (array) {
-			for (var i = 0; i < array.length; i++) {
-					// console log
-					console.log('=========================================');
-					// write last tweets in decending order to terminal
-					console.log('# ' + (array.length -(i)) + ': ' + array[i].text);
-
-					// append to log.txt
-					appendLog('=========================================');
-					// write last tweets in decending order to log.txt
-					appendLog('# ' + (array.length -(i)) + ': ' + array[i].text);
-			}
-		}
 		// if no error on request:
 		if (!error) {
 			// some liri speak
@@ -95,7 +96,7 @@ function spotify (arg) {
 		// append to log.txt
 		appendLog('Something went wrong, did you mean "The Sign" by the 90s Swedish pop Super-group Ace of Base?');
 		
-		song = 'The Sign ace of base'
+		song = 'The Sign ace of base';
 	}
 
 	spotify.search({ type: 'track', query: song }, function (error, response) {
@@ -130,7 +131,7 @@ function spotify (arg) {
 	    		appendLog('=========================================');
 	    	}
 	    }  
-	})
+	});
 }
 
 // function to run on 'movie-this' command
@@ -139,7 +140,7 @@ function movie () {
 	var endpoint = 'http://www.omdbapi.com/?t=';
 	var nullQuery = 'Mr.+Nobody';
 	var query = process.argv[3];
-	var params = '&y=&plot=short&r=json&tomatoes=true'
+	var params = '&y=&plot=short&r=json&tomatoes=true';
 
 	// handle null entry
 	if (process.argv[3]) {
@@ -183,7 +184,7 @@ function movie () {
 			appendLog('Movie-This error: '+ response.statusCode);
         	console.log(body);
 			}
-	})
+	});
 }
 
 // function to run on 'do-what-it-says' command
@@ -193,7 +194,7 @@ function says () {
 		var dataArr = data.split(',');
 		// call spotify
 		spotify(dataArr[1]);
-	})
+	});
 	appendLog('Do-What-It-Says was run.');
 }
 
@@ -206,5 +207,5 @@ function appendLog (log) {
 		if (error) {
 			console.log(error);
 		} 
-	})
+	});
 }

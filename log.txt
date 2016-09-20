@@ -275,3 +275,9 @@ my-tweets. Ok, got it! Here are the last tweets
 # 2: Just learned to use node.js in UNC Coding bootcamp.  I am going to use it to create a node app to pull tweets into terminal with TwitterAPI!
 =========================================
 # 1: Hello Twitter! #myfirstTweet
+my-Tweets was run.
+my-tweets. Ok, got it! Here are the last tweets
+=========================================
+# 2: Just learned to use node.js in UNC Coding bootcamp.  I am going to use it to create a node app to pull tweets into terminal with TwitterAPI!
+=========================================
+# 1: Hello Twitter! #myfirstTweet
