@@ -31,11 +31,13 @@ function writeTweets (array) {
 		console.log('=========================================');
 		// write last tweets in decending order to terminal
 		console.log('# ' + (array.length -(i)) + ': ' + array[i].text);
+		console.log('Created at: ' + array[i].created_at);
 
 		// append to log.txt
 		appendLog('=========================================');
 		// write last tweets in decending order to log.txt
 		appendLog('# ' + (array.length -(i)) + ': ' + array[i].text);
+		appendLog('Created at: ' + array[i].created_at);
 	}
 }
 
