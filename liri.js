@@ -10,10 +10,6 @@ var request = require('request');
 // twitter
 var Twitter = require('twitter'); 
 
-// spotify
-
-
-
 // keys
 var twitterKeys = keys.twitterKeys;
 
@@ -33,23 +29,79 @@ console.log('Check your spelling and try again!');
 function myTweets () {
 	var client = new Twitter (twitterKeys);
 	var params = keys.params;
+
+	// append to log.txt that this was run
+	appendLog('my-Tweets was run.');
+
+	// call to twitter
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+		// variable to store response as a JS Object
+		var twitterArr = JSON.parse(response.body); 
+
+		// started to repeat this code, so made a function
+		function writeTweets (array) {
+			for (var i = 0; i < array.length; i++) {
+					// console log
+					console.log('=========================================');
+					// write last tweets in decending order to terminal
+					console.log('# ' + (array.length -(i)) + ': ' + array[i].text);
+
+					// append to log.txt
+					appendLog('=========================================');
+					// write last tweets in decending order to log.txt
+					appendLog('# ' + (array.length -(i)) + ': ' + array[i].text);
+			}
+		}
+		// if no error on request:
 		if (!error) {
-    		console.log(response);
+			// some liri speak
+			console.log(process.argv[2] + '. Ok, got it! Here are the last tweets');
+			appendLog(process.argv[2] + '. Ok, got it! Here are the last tweets');
+			// if less than 20 tweets:
+			if (twitterArr.length <= 20) {
+				// write tweets
+				writeTweets(twitterArr);
+				// else make copy array that is the last 20 tweets 
+			} else {
+				// copy array made of last 20 tweets
+				var recent = twitterArr.slice((twitterArr.length - 20), (twitterArr.length + 1));
+				// write tweets 
+				writeTweets(recent);
+			}
+
+		// if error on request:
   		} else {
-  			console.log(response);
+  			console.log('Error: ' + error);
+  			appendLog('Twitter Error: ' + error);
   		}
 	});
-
 }
 
 // function to run on "spotify-this-thing" command
-function spotify() {
+function spotify (arg) {
+	// spotify
 	var spotify = require('spotify');
- 
-	spotify.search({ type: 'track', query: process.argv[3] }, function(error, response) {
+
+	// log message that this app was run
+	appendLog("Spotify-This-Song was run.");
+	
+	if (process.argv[3]) {
+		song = process.argv[3];
+	} else if (arg) {
+		song = arg;
+	} else {	
+		// console log cute liri message
+		console.log('Something went wrong, did you mean "The Sign" by the 90s Swedish pop Super-group Ace of Base?');
+		// append to log.txt
+		appendLog('Something went wrong, did you mean "The Sign" by the 90s Swedish pop Super-group Ace of Base?');
+		
+		song = 'The Sign ace of base'
+	}
+
+	spotify.search({ type: 'track', query: song }, function (error, response) {
 	    if (error) {
 	        console.log('Error occurred: ' + error);
+	        appendLog('Spotify Error Occurred: ' + error);
 	        return;
 	    }
 	    // Do something with 'data' 
@@ -58,19 +110,26 @@ function spotify() {
 	    	var responseArr = response.tracks.items;
 
 	    	// console log a message from Liri:
-	    	console.log(process.argv[3] + '. Ok, Got it! Here are the results for "spotify-this-song-' + process.argv[3] + '"');
-	    	// console.log(responseArr[0]);
-	    	for (var i = 0; i < responseArr.length; i++) {
-	    		console.log('Result #: ' + i);
+	    	console.log('Ok, Got it! Here are the top results for "spotify-this-song-' + process.argv[3] + '"');
+	    	// console.log only 10 results.
+	    	for (var i = 0; i < 10; i++) {
+	    		// console.logs of results
+	    		console.log('Result #: ' + (i + 1));
 	    		console.log('Artist: ' + responseArr[i].artists[0].name);
 	    		console.log('Song Name: ' + responseArr[i].name);
 	    		console.log('Preview Link: ' + responseArr[i].preview_url);
 	    		console.log('Album: ' + responseArr[i].album.name);
 	    		console.log('=========================================');
-	    	}
-	    }
 
-	    
+	    		// appendlog the results to log.txt
+	    		appendLog('Result #: ' + (i + 1));
+	    		appendLog('Artist: ' + responseArr[i].artists[0].name);
+	    		appendLog('Song Name: ' + responseArr[i].name);
+	    		appendLog('Preview Link: ' + responseArr[i].preview_url);
+	    		appendLog('Album: ' + responseArr[i].album.name);
+	    		appendLog('=========================================');
+	    	}
+	    }  
 	})
 }
 
@@ -89,6 +148,8 @@ function movie () {
 		queryUrl = endpoint + nullQuery + params;
 	}
 
+	appendLog('Movie-This was run.');
+
 	// API request
 	request(queryUrl, function(error, response, body) {
 		// convert JSON string response to JS Object
@@ -105,28 +166,45 @@ function movie () {
 			console.log('Actors: ' + movie.Actors);
 			console.log('Rotten Tomatoes Rating: ' + movie.tomatoRating);
 			console.log('Rotten Tomatoes URL: ' + movie.tomatoURL);
+
+			// append to log.txt file
+			appendLog('Title: ' + movie.Title);
+			appendLog('Year: ' + movie.Year);
+			appendLog('IMDB Rating: ' + movie.imdbRating);
+			appendLog('Country: ' + movie.Country);
+			appendLog('Language: ' + movie.Language);
+			appendLog('Plot: ' + movie.Plot);
+			appendLog('Actors: ' + movie.Actors);
+			appendLog('Rotten Tomatoes Rating: ' + movie.tomatoRating);
+			appendLog('Rotten Tomatoes URL: ' + movie.tomatoURL);
+
 		} else {
-			console.log('error: '+ response.statusCode)
-        	console.log(body)
+			console.log('error: '+ response.statusCode);
+			appendLog('Movie-This error: '+ response.statusCode);
+        	console.log(body);
 			}
 	})
 }
 
 // function to run on 'do-what-it-says' command
-/* * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-	* It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
-	* Feel free to change the text in that document to test out the feature for other commands.
-*/
 function says () {
-
+	fs.readFile("random.txt", 'utf8', function (error, data) {
+		// create an array of text
+		var dataArr = data.split(',');
+		// call spotify
+		spotify(dataArr[1]);
+	})
+	appendLog('Do-What-It-Says was run.');
 }
 
-/* BONUS
-### BONUS
+// function to write to log file
+function appendLog (log) {
+	// store arg log in variable-can probably skip this step
+	var logtext = log + '\n';
 
-* In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
-
-* Make sure you append each command you run to the `log.txt` file. 
-
-* Do not overwrite your file each time you run a command.
-*/
+	fs.appendFile('log.txt', logtext, function (error) {
+		if (error) {
+			console.log(error);
+		} 
+	})
+}
