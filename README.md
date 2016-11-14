@@ -1,6 +1,4 @@
-[![NSP Status](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4/badge)](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4)
-
-[![HitCount](https://hitt.herokuapp.com/{codemarq}/{liri-node-app}.svg)](https://github.com/{codemarq}/{liri-node-app})
+[![NSP Status](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4/badge)](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4)  [![HitCount](https://hitt.herokuapp.com/{codemarq}/{liri-node-app}.svg)](https://github.com/{codemarq}/{liri-node-app})
 
 
 # Liri-node-app
