@@ -1,3 +1,5 @@
+[![NSP Status](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4/badge)](https://nodesecurity.io/orgs/codemarq/projects/a3db5b95-7175-4987-8b6a-ff86acbefbe4)
+
 # Liri-node-app
 Liri is a Language Interpretation and Recognition Interface. Liri will be a command line Node.js app that takes in parameters and gives you back data.
 
