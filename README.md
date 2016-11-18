@@ -41,3 +41,6 @@ Default output for null user input is "Mr. Nobody" and console log 'It's on Netf
 
 ### node liri.js do-what-it-says
 This actually will choose a random command to run.  If the command requires an argument, it will read the argument from random.txt in this repo
+
+## Author
+&copy; 2016 John-Mike Marquardt [Github](https://github.com/codemarq) | [jmmarquardt.com](https://jmmarquardt.com) | [LinkedIn](https://www.linkedin.com/in/jmmarquardt)
